@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm, AddRecordForm
+from django.db.models import Q
 from .models import Record
+
 
 # Create your views here.
 
@@ -97,3 +99,22 @@ def update_record(request, pk):
 	else: 
 		messages.success(request, "Login first to update record.")
 		return redirect('home')
+
+
+def search_records(request):
+    if request.user.is_authenticated:  # User must be logged in to check user records
+        query = request.GET.get('q')  # Get the search query from the request
+        song_records = []
+
+        if query:
+            first_word = query.split()[0] if query.split() else '' #gets first word
+
+            # Filter records where the first word of the song title matches
+            song_records = Record.objects.filter(song_title__istartswith=first_word).order_by('artist_name')
+            # Get all matching records and sort alphabetically
+
+        return render(request, 'search_records.html', {'song_records': song_records})
+
+    else:
+        messages.success(request, "You must be logged in to search records.")
+        return redirect('home')

@@ -36,5 +36,12 @@
       
     </div>
 
+    <!-- Added search bar  -->
+      <form method="get" action="{% url 'search_records' %}"> 
+          <input type="text" name="q" placeholder="Search by song name" required>
+          <button type="submit" style="background-color: #2ba771; color: white; border: 1.5px solid white; padding: 3.5px 9px; cursor: pointer; font-size: 14px;">
+          Search</button>
+      </form>
+
   </div>
 </nav>

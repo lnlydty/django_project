@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- make two columns to show song records -->
+
+{% if song_records %}
+    <div class="row">
+        {% for song_record in song_records %}
+            <div class="col-md-6 mb-4">  
+                <div class="card">
+                    <div class="card-body">
+                    <h4>{{ song_record.song_title }} - {{ song_record.artist_name }}</h4>
+                    <strong>Song Type:</strong> {{ song_record.song_type }}<br/>
+                        
+                    <br/>
+                    <strong>Song Lyrics:</strong><br/>
+                    {{ song_record.song_lyrics|slice:":150"|linebreaks }}
+                        
+                        <!-- display only the first 150 characters for lyrics and chords -->
+
+                    <strong>Song Chords:</strong><br/>
+                    {{ song_record.song_chords|slice:":150"|linebreaks }}
+                        
+                    <strong>Created at:</strong> {{ song_record.created_at }}<br/> 
+                    <strong>ID:</strong>
+                    <a href="{% url 'record' song_record.id %}">{{ song_record.id }}</a><br/>
+                    <hr/> 
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No results found for this user.</p>
+{% endif %}
+
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+
+{% endblock %}

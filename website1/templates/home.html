@@ -4,7 +4,38 @@
 
 {% if user.is_authenticated %}
 
-<h1> Hello World </h1>
+<h1> Records </h1>
+
+<table class="table table-striped table-hover table-bordered">
+  <thead class="table-success">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Song Title</th>
+      <th scope="col">Artist</th>
+      <th scope="col">Song Type</th>
+      <th scope="col">Created At</th>
+    </tr>
+  </thead>
+  <tbody>
+
+{% if records %}
+  {% for record in records %}
+    <tr>
+    <td><a class="link-success" href="{% url 'record' record.id %}">{{ record.id }}</a></td> 
+    <td>{{ record.song_title }}</td>
+    <td>{{ record.artist_name }}</td>
+    <td>{{ record.song_type }}</td>
+    <td>{{ record.created_at }}</td>
+    </tr>
+  
+  {% endfor %}
+{% endif %}
+
+</tbody>
+</table>
+
+
+
 
 {% else %}
 <div class="col-md-6 offset-md-3">

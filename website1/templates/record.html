@@ -1,0 +1,36 @@
+  <!-- displays user_record when the corresponding id is clicked -->
+
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card">
+  <div class="card-header">
+    Song Record
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="card-title">{{ song_record.song_title }} - {{ song_record.artist_name }}</h2>
+        <strong>Song Type:</strong> {{ song_record.song_type }}<br/>
+        <br/>
+        <strong>Song Lyrics:</strong><br/>
+        {{ song_record.song_lyrics|linebreaks }}
+
+        <br/>
+        <strong>Created at:</strong> {{ song_record.created_at }}<br/>
+        <strong>ID:</strong> <span style="color: green;">{{ song_record.id }}</span>
+
+      </div>
+      <div class="col-md-6">
+        <strong>Song Chords:</strong><br/>
+        <p>{{ song_record.song_chords|linebreaks }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<br.><br/>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+
+{% endblock %}

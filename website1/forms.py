@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from .models import Record
 
 
 class SignUpForm(UserCreationForm): # --> register.html
@@ -30,3 +31,17 @@ class SignUpForm(UserCreationForm): # --> register.html
 		self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
 		self.fields['password2'].label = ''
 		self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'	
+
+
+
+#Records --> add_record.html
+class AddRecordForm(forms.ModelForm):
+	song_title = forms.CharField(required=True, widget = forms.widgets.TextInput(attrs={"placeholder":"Song Title", "class":"form-control"}), label="")
+	artist_name = forms.CharField(required=True, widget = forms.widgets.TextInput(attrs={"placeholder":"Artist", "class":"form-control"}), label="")
+	song_lyrics = forms.CharField(required=True, widget=forms.Textarea(attrs={"placeholder":"Song Lyrics", "class":"form-control"}), label="")
+	song_type = forms.CharField(required=True, widget = forms.widgets.TextInput(attrs={"placeholder":"Song Type", "class":"form-control"}), label="")
+	song_chords = forms.CharField(required=True, widget=forms.Textarea(attrs={"placeholder":"Song Chords", "class":"form-control"}), label="")
+
+	class Meta: 
+		model = Record
+		exclude = ("user",)

@@ -110,8 +110,8 @@ def search_records(request):
             first_word = query.split()[0] if query.split() else '' #gets first word
 
             # Filter records where the first word of the song title matches
-            song_records = Record.objects.filter(song_title__istartswith=first_word).order_by('artist_name')
-            # Get all matching records and sort alphabetically
+            song_records = Record.objects.filter(artist_name__istartswith=first_word).order_by('song_title')
+            # Get all matching records and sort alphabetically  by artist name
 
         return render(request, 'search_records.html', {'song_records': song_records})
 

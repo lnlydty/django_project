@@ -10,7 +10,7 @@
             <div class="col-md-6 mb-4">  
                 <div class="card">
                     <div class="card-body">
-                    <h4>{{ song_record.song_title }} - {{ song_record.artist_name }}</h4>
+                    <h4>{{ song_record.song_title }} by {{ song_record.artist_name }}</h4>
                     <strong>Song Type:</strong> {{ song_record.song_type }}<br/>
                         
                     <br/>
@@ -23,8 +23,7 @@
                     {{ song_record.song_chords|slice:":150"|linebreaks }}
                         
                     <strong>Created at:</strong> {{ song_record.created_at }}<br/> 
-                    <strong>ID:</strong>
-                    <a href="{% url 'record' song_record.id %}">{{ song_record.id }}</a><br/>
+                    <strong>ID:</strong> <a class="link-success" href="{% url 'record' song_record.id %}">{{ song_record.id }}</a><br/>
                     <hr/> 
                     </div>
                 </div>

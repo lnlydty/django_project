@@ -36,10 +36,15 @@ class SignUpForm(UserCreationForm): # --> register.html
 
 #Records --> add_record.html
 class AddRecordForm(forms.ModelForm):
+	song_type_choices = [
+		('Praise' , 'PRAISE'),	#dropdown choices
+		('WORSHIP', 'Worship'),
+	]
+
 	song_title = forms.CharField(required=True, widget = forms.widgets.TextInput(attrs={"placeholder":"Song Title", "class":"form-control"}), label="")
 	artist_name = forms.CharField(required=True, widget = forms.widgets.TextInput(attrs={"placeholder":"Artist", "class":"form-control"}), label="")
 	song_lyrics = forms.CharField(required=True, widget=forms.Textarea(attrs={"placeholder":"Song Lyrics", "class":"form-control"}), label="")
-	song_type = forms.CharField(required=True, widget = forms.widgets.TextInput(attrs={"placeholder":"Song Type", "class":"form-control"}), label="")
+	song_type = forms.ChoiceField(choices=song_type_choices, widget = forms.Select(attrs={"class":"form-control"}), label="")
 	song_chords = forms.CharField(required=True, widget=forms.Textarea(attrs={"placeholder":"Song Chords", "class":"form-control"}), label="")
 
 	class Meta: 

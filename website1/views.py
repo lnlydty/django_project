@@ -112,8 +112,12 @@ def search_records(request):
         if query:
             search_words = query.split() 
             
-            # Create Q objects for each search word
-            q_objects = [Q(song_title__icontains=word) for word in search_words]
+            # Q objects for each field: song title, artist name, song type - use any of these search words
+            q_objects = []
+            for word in search_words:
+            	q_objects.append(Q(song_title__icontains=word))
+            	q_objects.append(Q(artist_name__icontains=word))
+            	q_objects.append(Q(song_type__icontains=word))
 
             # Combine Q objects with OR
             combined_q = reduce(operator.or_, q_objects)

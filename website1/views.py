@@ -4,6 +4,9 @@ from django.contrib import messages
 from .forms import SignUpForm, AddRecordForm
 from django.db.models import Q
 from .models import Record
+from functools import reduce
+import operator
+
 
 
 # Create your views here.
@@ -107,10 +110,15 @@ def search_records(request):
         song_records = []
 
         if query:
-            first_word = query.split()[0] if query.split() else '' #gets first word
+            search_words = query.split() 
+            
+            # Create Q objects for each search word
+            q_objects = [Q(song_title__icontains=word) for word in search_words]
 
-            # Filter records where the first word of the song title matches
-            song_records = Record.objects.filter(artist_name__istartswith=first_word).order_by('song_title')
+            # Combine Q objects with OR
+            combined_q = reduce(operator.or_, q_objects)
+
+            song_records = Record.objects.filter(combined_q).order_by('artist_name')
             # Get all matching records and sort alphabetically  by artist name
 
         return render(request, 'search_records.html', {'song_records': song_records})
@@ -118,3 +126,4 @@ def search_records(request):
     else:
         messages.success(request, "You must be logged in to search records.")
         return redirect('home')
+

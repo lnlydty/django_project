@@ -108,16 +108,23 @@ def search_records(request):
     if request.user.is_authenticated:  # User must be logged in to check user records
         query = request.GET.get('q')  # Get the search query from the request
         song_records = []
+        search_type = request.GET.get('search_type')
 
         if query:
             search_words = query.split() 
             
             # Q objects for each field: song title, artist name, song type - use any of these search words
             q_objects = []
-            for word in search_words:
-            	q_objects.append(Q(song_title__icontains=word))
-            	q_objects.append(Q(artist_name__icontains=word))
-            	q_objects.append(Q(song_type__icontains=word))
+
+            if search_type == 'song_title':
+            	for word in search_words:
+            		q_objects.append(Q(song_title__icontains=word))
+            elif search_type == 'artist_name':
+            	for word in search_words:
+            		q_objects.append(Q(artist_name__icontains=word))
+            elif search_type == 'song_type':
+            	for word in search_words:
+            		q_objects.append(Q(song_type__icontains=word))
 
             # Combine Q objects with OR
             combined_q = reduce(operator.or_, q_objects)

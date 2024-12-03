@@ -1,8 +1,8 @@
 <!-- html contains the add record, logout, register, login buttons -->
 
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #2ba771;">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(to right, #2ba771, #007f7f);">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'home' %}">
+    <a class="navbar-brand" href="{% url 'home' %}" style="font-weight: bold;">
     LyricsPeriod.
    </a>
 
@@ -38,7 +38,14 @@
 
     <!-- Added search bar  -->
       <form method="get" action="{% url 'search_records' %}"> 
-          <input type="text" name="q" placeholder="Search song name" required>
+          <input type="text" name="q" placeholder="Search..." required>
+
+          <select name = "search_type">
+            <option value="song_title" {% if search_type == song_title %}selected{% endif %}>Song Title</option>
+            <option value="artist_name" {% if search_type == artist_name %}selected{% endif %}>Artist</option>
+       ```` <option value="song_type" {% if search_type == song_type %}selected{% endif %}>Song Type</option>
+          </select>
+
           <button type="submit" style="background-color: #2ba771; color: white; border: 1.5px solid white; padding: 3.5px 9px; cursor: pointer; font-size: 14px;">
           Search</button>
       </form>
